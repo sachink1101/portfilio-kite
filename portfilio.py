@@ -178,7 +178,10 @@ def api_positions():
 
 @app.route("/")
 def index():
-    # Serve the frontend
+    # Serve built frontend from /static (Vite build). Fallback to legacy static/index.html
+    index_path = os.path.join(app.static_folder, "index.html")
+    if os.path.exists(index_path):
+        return send_from_directory(app.static_folder, "index.html")
     return send_from_directory(app.static_folder, "index.html")
 
 
